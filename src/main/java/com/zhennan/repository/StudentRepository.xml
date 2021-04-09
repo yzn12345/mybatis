@@ -2,16 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhennan.repository.StudentRepository">
-    <resultMap id="studentMap" type="com.zhennan.entity.Student">
-        <id column="sid" property="id"></id>
-        <result column="sname" property="name"></result>
-        <association property="classes" javaType="com.zhennan.entity.Classes">
-            <id column="id" property="id"></id>
-            <result column="name" property="name"></result>
+    <resultMap id="studentMapLazy" type="com.zhennan.entity.Student">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <association property="classes" javaType="com.zhennan.entity.Classes"
+                     select="com.zhennan.repository.ClassesRepository.findById" column="cid">
         </association>
     </resultMap>
-    <select id="findById" parameterType="long" resultMap="studentMap">
-        select s.id as sid, s.name as sname, c.id, c.name from `student` s, `classes` c where s.id = 1 AND c.id = s.cid;
+    <select id="findByIdLazy" parameterType="long" resultMap="studentMapLazy">
+        select * from student where id = #{id}
     </select>
 
 </mapper>

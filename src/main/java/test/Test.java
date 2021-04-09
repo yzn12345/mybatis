@@ -23,12 +23,12 @@ public class Test {
         SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
         //获取实现接⼝的代理对象
-        CustomerRepository customerRepository =
-                sqlSession.getMapper(CustomerRepository.class);
+        StudentRepository studentRepository =
+                sqlSession.getMapper(StudentRepository.class);
 
         //查询全部对象
-        Customer customer = customerRepository.findById(1L);
-        System.out.println(customer);
+        Student student = studentRepository.findByIdLazy(2L);
+        System.out.println(student);
         sqlSession.close();
 
 
